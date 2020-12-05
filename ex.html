@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+      $(function () {
+        $("#loadAlbum").on("click", function () {
+          $.ajax({
+            url: "https://jsonplaceholder.typicode.com/albums",
+            type: "get",
+            dataType: "json",
+          }).done(function (data) {
+            // var titles = "";
+            var titles = data
+              .map(function (item) {
+                return item.title + "<br/>";
+              })
+              .join("");
+            console.log(titles);
+            // for (var i = 0; i < data.length; i++) {
+            //   titles += data[i].title + "<br/>";
+            // }
+            $("#album").html(titles);
+          });
+        });
+        $("#loadImage").on("click", function () {
+          $.ajax({
+            url: "https://jsonplaceholder.typicode.com/photos",
+            type: "get",
+            dataType: "json",
+          }).done(function (data) {
+            const user1 = data[0];
+            $("#img").html("<img src='" + user1.thumbnailUrl + "'/>");
+          });
+        });
+        $("#loadData").on("click", function () {
+          $.ajax({
+            url: "https://jsonplaceholder.typicode.com/users",
+            type: "GET",
+            dataType: "json",
+          }).done(function (data) {
+            const user1 = data[0];
+            $("#data").text(
+              user1.name +
+                " " +
+                user1.phone +
+                " " +
+                user1.username +
+                " " +
+                user1.email
+            );
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div>
+      <div id="data">data</div>
+      <div id="img">images</div>
+      <div id="album">album</div>
+      <input type="text" id="text" />
+      <div>
+        <button id="loadData">Click</button>
+        <button id="loadImage">Load Images</button>
+        <button id="loadAlbum">Load Albums</button>
+      </div>
+    </div>
+  </body>
+</html>
